@@ -82,3 +82,8 @@ You can also refer to the example.py file for usage and implementation examples.
 ## Disclaimer
 
 Please use this module responsibly and in compliance with Grindr's terms of service and guidelines. Unauthorized use or misuse of the module may violate Grindr's policies and could result in account suspension or legal action. Use this module at your own risk.
+
+
+## Get Creds from the Downloads Directory of your Android Device -- created by using GNegativePlus
+
+## To Do -- WebSocket -- extract creds add interaction
