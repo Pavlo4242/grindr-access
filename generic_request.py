@@ -4,7 +4,7 @@ import zlib
 from .utils import gen_l_dev_info
 
 
-def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=None):
+def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=None, l_device_info=None, user_agent=None):
     buffer = image_io.read()
 
     response_data = []
@@ -26,15 +26,15 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
         "connection: Keep-Alive",
         "content-type: image/jpeg",
         "host: grindr.mobi",
-        f"l-device-info: {gen_l_dev_info()}",
+        f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/25.12.1.140963;140963;Free;Android 15;SM-A166P;samsung",
+        f"user-agent: {user_agent if user_agent else 'grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google'}",
     ]
 
     if auth_token is not None:
-        headers.append("authorization: Grindr3 " + auth_token)
+      return json.loads(decompressed_response)
 
     c.setopt(c.HTTPHEADER, headers)
 
@@ -75,11 +75,11 @@ def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-        f"l-device-info: {gen_l_dev_info()}",
+ f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
+        f"user-agent: {user_agent if user_agent else 'grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google'}",
     ]
 
     if auth_token is not None:
@@ -124,11 +124,11 @@ def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-        f"l-device-info: {gen_l_dev_info()}",
+        f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
+        f"user-agent: {user_agent if user_agent else 'grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google'}",
         "Content-Length: " + str(len(data_json))
     ]
 
@@ -186,11 +186,11 @@ def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-        f"l-device-info: {gen_l_dev_info()}",
+             f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/9.17.3.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google",
+        f"user-agent: {user_agent if user_agent else 'grindr3/9.17.3.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google'}",
     ]
 
     if auth_token is not None:
