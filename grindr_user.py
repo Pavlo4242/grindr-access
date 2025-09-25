@@ -35,17 +35,27 @@ class GrindrUser:
         self.authToken = None
         self.xmppToken = ""
 
+        # Properties to hold info from the log file
+        self.l_device_info = None
+        self.user_agent = None
+
         self.proxy = None
         self.proxy_port = None
 
-def set_session(self, session_id, auth_token, profile_id):
-    """
-    Manually sets the session information without logging in.
-    """
-    self.sessionId = session_id
-    self.authToken = auth_token
-    self.profileId = profile_id
-    
+    def set_session(self, profile_id, auth_token, l_device_info, user_agent):
+        """
+        Manually sets the session information without logging in.
+        """
+        if not all([profile_id, auth_token, l_device_info, user_agent]):
+            raise ValueError("Missing one or more required session parameters.")
+            
+        self.profileId = profile_id
+        # The script uses sessionId and authToken interchangeably for the token.
+        self.sessionId = auth_token 
+        self.authToken = auth_token
+        self.l_device_info = l_device_info
+        self.user_agent = user_agent
+
     def set_proxy(self, proxy, proxy_port):
         self.proxy = proxy
         self.proxy_port = proxy_port
@@ -66,7 +76,7 @@ def set_session(self, session_id, auth_token, profile_id):
 
             if response["code"] == 27:
                 self.banned = True
-                raise Exception(f'Banned for {response['reason']}')
+                raise Exception(f'Banned for {response["reason"]}')
 
             if response["code"] == 28:
                 self.banned = True
@@ -99,6 +109,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -110,6 +122,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -122,6 +136,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -133,6 +149,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -145,6 +163,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -156,6 +176,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -168,6 +190,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
 
         self.sessionId = response["sessionId"]
@@ -185,6 +209,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
         return response
 
@@ -212,6 +238,8 @@ def set_session(self, session_id, auth_token, profile_id):
             auth_token=self.sessionId,
             proxy=self.proxy,
             proxy_port=self.proxy_port,
+            l_device_info=self.l_device_info,
+            user_agent=self.user_agent
         )
 
     @check_banned
@@ -221,7 +249,7 @@ def set_session(self, session_id, auth_token, profile_id):
             "secondaryImageHashes": secondary_hashes,
         }
 
-        return generic_put(IMAGES, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
+        return generic_put(IMAGES, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port, l_device_info=self.l_device_info, user_agent=self.user_agent)
 
     @check_banned
     def set_location(self, lat, lng):
@@ -229,4 +257,5 @@ def set_session(self, session_id, auth_token, profile_id):
             "geohash": to_geohash(lat, lng)
         }
 
-        return generic_put(LOCATION, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
+        return generic_put(LOCATION, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port, l_device_info=self.l_device_info, user_agent=self.user_agent)
+
