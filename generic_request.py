@@ -30,7 +30,7 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
+        "user-agent: grindr3/25.12.1.140963;140963;Free;Android 15;SM-A166P;samsung",
     ]
 
     if auth_token is not None:
