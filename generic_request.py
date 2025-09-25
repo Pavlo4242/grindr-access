@@ -34,7 +34,7 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
     ]
 
     if auth_token is not None:
-      return json.loads(decompressed_response)
+        headers.append("authorization: Grindr3 " + auth_token)
 
     c.setopt(c.HTTPHEADER, headers)
 
@@ -52,7 +52,7 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
     return json.loads(decompressed_response)
 
 
-def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
+def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None, l_device_info=None, user_agent=None):
     response_data = []
 
     request_data = data
@@ -75,7 +75,7 @@ def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
- f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
+        f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
@@ -101,7 +101,7 @@ def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
     return json.loads(decompressed_response)
 
 
-def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None):
+def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None, l_device_info=None, user_agent=None):
     response_data = []
 
     request_data = data
@@ -158,7 +158,7 @@ def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None):
         return {"error": "JSON decoding failed", "details": str(e)}
 
 
-def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None):
+def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None, l_device_info=None, user_agent=None):
     response_data = []
 
     request_data = data
@@ -186,7 +186,7 @@ def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-             f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
+        f"l-device-info: {l_device_info if l_device_info else gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
@@ -209,3 +209,4 @@ def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None):
 
     decompressed_response = zlib.decompress(response_data, zlib.MAX_WBITS | 16)
     return json.loads(decompressed_response)
+
