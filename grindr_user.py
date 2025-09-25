@@ -38,6 +38,14 @@ class GrindrUser:
         self.proxy = None
         self.proxy_port = None
 
+def set_session(self, session_id, auth_token, profile_id):
+    """
+    Manually sets the session information without logging in.
+    """
+    self.sessionId = session_id
+    self.authToken = auth_token
+    self.profileId = profile_id
+    
     def set_proxy(self, proxy, proxy_port):
         self.proxy = proxy
         self.proxy_port = proxy_port
